@@ -268,19 +268,19 @@ Only `metadata`:
 Only `data`:
 
 ```txt
-?select=data
+?select=answers
 ```
 
 One specific key, inside all array elements in `data`:
 
 ```txt
-?select=data[*|variable]
+?select=answers[*|variable]
 ```
 
 Two keys, inside one array element in `data`:
 
 ```txt
-?select=data[1|variable,degree]
+?select=answers[1|variable,degree]
 ```
 
 #### Row filtering
@@ -296,7 +296,7 @@ A row with a specific `submission_id`, nested inside the `metadata` key:
 With a pattern match, broadcasting over all elements in the `data` key's array:
 
 ```txt
-?where=data[0|variable]=like.ans*
+?where=answers[0|variable]=like.ans*
 ```
 
 Combining with `and` and `or`:
@@ -308,7 +308,7 @@ Combining with `and` and `or`:
 Using the `in` operator:
 
 ```txt
-?where=data[0|variable]=in.[val1,val2,val3]
+?where=answers[0|variable]=in.[val1,val2,val3]
 ```
 
 To avoid issues with special characters, callers can quote the values in where clauses:
@@ -405,7 +405,7 @@ Schemas are agreed upon between TSD and Nettskjema.
 To update data, use the query functionality to isolate the entry, and send the new row in its entirety:
 
 ```txt
-PATCH /v1/p11/survey/1234/submissions?set=data&where=metadata.submission_id=eq.1
+PATCH /v1/p11/survey/1234/submissions?set=answers&where=metadata.submission_id=eq.1
 Authorization: Bearer $survey_import
 
 {data: [...]}
@@ -416,7 +416,7 @@ Such operations are recorded in the audit log.
 To get data:
 
 ```txt
-GET /v1/p11/survey/1234/submissions?select=data[*|variable]&where=data[0|degree]=gt.4
+GET /v1/p11/survey/1234/submissions?select=answers[*|variable]&where=answers[0|degree]=gt.4
 Authorization: Bearer $survey_export
 ```
 
